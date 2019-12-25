@@ -9,7 +9,7 @@ from pyppl.utils import filesig
 from pyppl.logger import logger
 from pyppl._proc import OUT_FILETYPE, OUT_DIRTYPE
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 class PyPPLRunnerDry(PyPPLRunnerLocal):
 	"""@API

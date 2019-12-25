@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyppl_runners"
-version = "0.0.1"
+version = "0.0.2"
 description = "More strict check of job success for PyPPL"
 authors = ["pwwang <pwwang@pwwang.com>"]
 license = "MIT"
