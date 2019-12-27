@@ -12,7 +12,7 @@ checksource = py:False
 checktoml = py:False
 
 ; The source file or the package name.
-versource = pyppl_flowchart
+versource = pyppl_runners
 
 ; The toml file, typically pyproject.toml.
 vertoml = ./pyproject.toml
@@ -22,4 +22,3 @@ increment = patch
 
 ; Extra commands to run before tag committed and pushed.
 extra = py:False
-
