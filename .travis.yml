@@ -1,0 +1,24 @@
+language: python
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+    - python: 3.6
+before_install:
+  - pip install poetry
+  - pip install tox-travis
+  - pip install codacy-coverage
+install:
+  - poetry install -v
+script:
+  - pytest tests/
+after_success: |
+  if [ "$TRAVIS_PYTHON_VERSION" == "3.7" ]; then
+    python-codacy-coverage -r .coverage.xml
+  fi
+deploy:
+  provider: script
+  script: poetry publish --build -u $PYPI_USER -p $PYPI_PASSWORD
+  on:
+    tags: true
+    condition: "$TRAVIS_PYTHON_VERSION == 3.7"
