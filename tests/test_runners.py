@@ -2,6 +2,9 @@ import pytest
 import pyppl
 import pyppl_runners
 
+def test_runners():
+	pass
+
 # @pytest.fixture(scope='function')
 # def proc(tmp_path):
 # 	proc = Proc()
