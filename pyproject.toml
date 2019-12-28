@@ -16,6 +16,8 @@ cmdy = "*"
 diot = "*"
 
 [tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-cov = "*"
 
 [tool.poetry.plugins.pyppl_runner]
 pyppl_runner_dry = "pyppl_runners:dry"

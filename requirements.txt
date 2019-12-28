@@ -1,3 +1,5 @@
 cmdy
 diot
 pyppl
+pytest
+pytest-cov
