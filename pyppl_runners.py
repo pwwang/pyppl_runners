@@ -1,17 +1,20 @@
 
+"""Common runners for PyPPL"""
+
 from os import utime, getcwd
 import sys
 import re
 import cmdy
-from diot import OrderedDiot
+from diot import OrderedDiot, Diot
 from pyppl.runner import hookimpl, PyPPLRunnerLocal
 from pyppl.utils import filesig
 from pyppl.logger import logger
 from pyppl._proc import OUT_FILETYPE, OUT_DIRTYPE
 
 __version__ = "0.0.2"
+# pylint: disable=no-self-use
 
-class PyPPLRunnerDry(PyPPLRunnerLocal):
+class PyPPLRunnerDry(PyPPLRunnerLocal): # pylint: disable=too-few-public-methods
 	"""@API
 	The dry runner
 	"""
@@ -52,7 +55,7 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
 	SSH          = None
 
 	@staticmethod
-	def is_server_alive(server, key = None, timeout = 3, ssh = 'ssh'):
+	def is_server_alive(server, key = None, timeout = 3, ssh = 'ssh'): # pylint: disable=redefined-outer-name
 		"""@API
 		Check if an ssh server is alive
 		@params:
@@ -75,6 +78,7 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
 
 	@hookimpl
 	def runner_init(self, proc):
+		"""Initiate runner"""
 		ssh         = proc.runner.get('ssh_ssh', 'ssh')
 		servers     = proc.runner.get('ssh_servers', [])
 		keys        = proc.runner.get('ssh_keys', [])
@@ -96,6 +100,7 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
 
 	@hookimpl
 	def script_parts(self, job, base):
+		"""Parts of the script"""
 		server = list(PyPPLRunnerSsh.LIVE_SERVERS.keys())[
 			job.index % len(PyPPLRunnerSsh.LIVE_SERVERS)]
 		key = PyPPLRunnerSsh.LIVE_SERVERS[server]
@@ -162,12 +167,14 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
 		return job.ssh(_ = cmd).rc == 0
 
 class PyPPLRunnerSge:
+	"""SGE runner"""
 	__version__ = __version__
 	POLL_INTERVAL = 5
 	CMD_QSUB = CMD_QSTAT = CMD_QDEL = None
 
 	@hookimpl
 	def runner_init(self, proc):
+		"""Initiate runner"""
 		PyPPLRunnerSge.CMD_QSUB = cmdy.qsub.bake(
 			_exe = proc.runner.get('sge_qsub', 'qsub'), _raise = False)
 		PyPPLRunnerSge.CMD_QSTAT = cmdy.qsub.bake(
@@ -177,6 +184,7 @@ class PyPPLRunnerSge:
 
 	@hookimpl
 	def script_parts(self, job, base):
+		"""Parts of the script"""
 		sge_n = job.proc.runner.get('sge_N', '%s.%s.%s.%s' % (
 			job.proc.id,
 			job.proc.tag.replace('@', '_'), # fix @ not allowed in job names
@@ -240,12 +248,14 @@ class PyPPLRunnerSge:
 		return PyPPLRunnerSge.CMD_QSTAT(j = job.pid).rc == 0
 
 class PyPPLRunnerSlurm:
+	"""Slurm runner"""
 	__version__ = __version__
 	POLL_INTERVAL = 5
 	CMD_SBATCH = CMD_SRUN = CMD_SCANCEL = CMD_SQUEUE = None
 
 	@hookimpl
 	def runner_init(self, proc):
+		"""Initiate runner"""
 		PyPPLRunnerSlurm.CMD_SBATCH = cmdy.qsub.bake(
 			_exe = proc.runner.get('slurm_sbatch', 'sbatch'), _raise = False)
 		PyPPLRunnerSlurm.CMD_SRUN = cmdy.qsub.bake(
@@ -257,6 +267,7 @@ class PyPPLRunnerSlurm:
 
 	@hookimpl
 	def script_parts(self, job, base):
+		"""Parts of the script"""
 		slurm_j = job.proc.runner.get('slurm_J', '%s.%s.%s.%s' % (
 			job.proc.id,
 			job.proc.tag.replace('@', '_'), # fix @ not allowed in job names
@@ -325,6 +336,7 @@ class PyPPLRunnerSlurm:
 			return False
 		return PyPPLRunnerSlurm.CMD_SQUEUE(j = job.pid).rc == 0
 
+# pylint: disable=invalid-name,redefined-outer-name
 dry = PyPPLRunnerDry()
 ssh = PyPPLRunnerSsh()
 sge = PyPPLRunnerSge()
