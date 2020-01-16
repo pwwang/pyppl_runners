@@ -21,7 +21,7 @@ setup(
     author='pwwang',
     author_email='pwwang@pwwang.com',
     license='MIT',
-    entry_points={"pyppl_runner": ["pyppl_runner_dry = pyppl_runners:dry", "pyppl_runner_sge = pyppl_runners:sge", "pyppl_runner_slurm = pyppl_runners:slurm", "pyppl_runner_ssh = pyppl_runners:ssh"]},
+    entry_points={"pyppl_runner": ["pyppl_runner_dry = pyppl_runners:DRY_RUNNER", "pyppl_runner_sge = pyppl_runners:SGE_RUNNER", "pyppl_runner_slurm = pyppl_runners:SLURM_RUNNER", "pyppl_runner_ssh = pyppl_runners:SSH_RUNNER"]},
     packages=[],
     package_dir={"": "."},
     package_data={},
