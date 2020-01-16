@@ -155,7 +155,6 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
 
         # submit the job
         cmd = job.ssh(_bg=True, _=job.script)
-        print(cmd.cmd)
         cmd.rc = 0
         job.pid = cmd.pid
         return cmd
