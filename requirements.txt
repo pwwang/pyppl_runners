@@ -1,5 +1,6 @@
 cmdy
 diot
+psutil==5.*
 pyppl
 pytest
 pytest-cov

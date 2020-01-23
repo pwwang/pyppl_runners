@@ -165,7 +165,7 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
         Kill the job
         """
         cmd = cmdy.python(
-            c=('from pyppl.utils import killtree; '
+            c=('from pyppl.runner import killtree; '
                'killtree(%s, killme = True)' % job.pid),
             _exe=sys.executable,
             _raise=False,
