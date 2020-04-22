@@ -43,7 +43,7 @@ class PyPPLRunnerDry(PyPPLRunnerLocal):  # pylint: disable=too-few-public-method
                     str(job.dir / 'output' / value)
                 )
         # don't run the real script
-        base.command = ''
+        base.command = 'true'
         base.saveoe = False
 
         # we should also prevent further run caching from this results
