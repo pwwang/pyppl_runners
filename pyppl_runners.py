@@ -10,7 +10,7 @@ from pyppl.utils import filesig
 from pyppl.logger import logger
 from pyppl._proc import OUT_FILETYPE, OUT_DIRTYPE
 
-__version__ = "0.0.2"
+__version__ = "0.0.4"
 # pylint: disable=no-self-use,not-callable
 
 
