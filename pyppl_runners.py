@@ -3,14 +3,14 @@
 from os import utime, getcwd
 import sys
 import re
-import cmdy
-from diot import OrderedDiot, Diot
 from pyppl.runner import hookimpl, PyPPLRunnerLocal
 from pyppl.utils import filesig
 from pyppl.logger import Logger
 from pyppl._proc import OUT_FILETYPE, OUT_DIRTYPE
+from diot import OrderedDiot, Diot
+import cmdy
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 # pylint: disable=no-self-use,not-callable
 # pylint: disable=invalid-name
 logger = Logger(plugin='runners')
