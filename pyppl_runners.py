@@ -7,17 +7,21 @@ import cmdy
 from diot import OrderedDiot, Diot
 from pyppl.runner import hookimpl, PyPPLRunnerLocal
 from pyppl.utils import filesig
-from pyppl.logger import logger
+from pyppl.logger import Logger
 from pyppl._proc import OUT_FILETYPE, OUT_DIRTYPE
 
 __version__ = "0.0.4"
 # pylint: disable=no-self-use,not-callable
+# pylint: disable=invalid-name
+logger = Logger(plugin='runners')
+# pylint: enable=invalid-name
 
-
-class PyPPLRunnerDry(PyPPLRunnerLocal):  # pylint: disable=too-few-public-methods
+class PyPPLRunnerDry(PyPPLRunnerLocal):
     """@API
     The dry runner
     """
+    # pylint: disable=too-few-public-methods
+
     __version__ = __version__
 
     @hookimpl
