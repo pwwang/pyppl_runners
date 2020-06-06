@@ -10,7 +10,7 @@ from pyppl._proc import OUT_FILETYPE, OUT_DIRTYPE
 from diot import OrderedDiot, Diot
 import cmdy
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 # pylint: disable=no-self-use,not-callable
 # pylint: disable=invalid-name
 logger = Logger(plugin='runners')

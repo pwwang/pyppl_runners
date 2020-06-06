@@ -14,7 +14,7 @@ readme = ''
 setup(
     long_description=readme,
     name='pyppl_runners',
-    version='0.0.5',
+    version='0.0.6',
     description='More strict check of job success for PyPPL',
     python_requires='==3.*,>=3.6.0',
     author='pwwang',
