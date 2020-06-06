@@ -39,11 +39,11 @@ class PyPPLRunnerDry(PyPPLRunnerLocal):
 
         for vtype, value in job.output.values():
             if vtype in OUT_FILETYPE:
-                base.pre += "touch %s\n" % cmdy._shquote(
+                base.pre += "touch %r\n" (
                     str(job.dir / 'output' / value)
                 )
             elif vtype in OUT_DIRTYPE:
-                base.pre += "mkdir -p %s\n" % cmdy._shquote(
+                base.pre += "mkdir -p %r\n" % (
                     str(job.dir / 'output' / value)
                 )
         # don't run the real script
@@ -92,7 +92,7 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
         try:
             cmd = cmdy.ssh(**params)
             return cmd.rc == 0
-        except cmdy.CmdyTimeoutException:
+        except cmdy.CmdyTimeoutError:
             return False
 
     @hookimpl
@@ -141,9 +141,8 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
         # checking if we are on the same file system
         cmd = job.ssh(_=cmdy.ls(
             job.dir.joinpath('job.script'),
-            _hold=True,
             _raise=False
-        ).cmd)
+        ).h.cmd)
         if cmd.rc != 0:
             dbox = Diot()
             dbox.rc = cmd.rc
@@ -172,8 +171,8 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
             c=('from pyppl.runner import killtree; '
                'killtree(%s, killme = True)' % job.pid),
             _exe=sys.executable,
-            _raise=False,
-            _hold=True).cmd
+            _raise=False
+        ).h.strcmd
         job.ssh(_=cmd)
 
     @hookimpl
@@ -193,10 +192,9 @@ class PyPPLRunnerSsh(PyPPLRunnerLocal):
             c=('from psutil import pid_exists; '
                'assert {pid} > 0 and pid_exists({pid})'.format(pid=job.pid)),
             _raise=False,
-            _exe=sys.executable,
-            _hold=True
-        ).cmd
-        return job.ssh(_=cmd).rc == 0
+            _exe=sys.executable
+        ).h.strcmd
+        return job.ssh(_=strcmd).rc == 0
 
 
 class PyPPLRunnerSge:
